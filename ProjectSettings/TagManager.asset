@@ -14,8 +14,8 @@ TagManager:
   - Ground
   - Background
   - Player
-  - 
-  - 
+  - AgentCollider
+  - Agent
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2275406833
+    locked: 0
+  - name: Agent
+    uniqueID: 963686701
     locked: 0
