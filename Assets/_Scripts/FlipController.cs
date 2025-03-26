@@ -1,18 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlipController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Flip(Vector2 input)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(Mathf.Abs(input.x) > 0)
+            transform.parent.localScale = new Vector2(Mathf.Abs(transform.parent.localScale.x) * input.x, transform.parent.localScale.y);
     }
 }
