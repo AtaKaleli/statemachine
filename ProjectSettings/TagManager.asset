@@ -15,15 +15,15 @@ TagManager:
   - Background
   - Player
   - AgentCollider
-  - Agent
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - CameraConfiner
+  - ClimbingStuff
+  - Hittable
+  - Weapon
+  - Platforms
+  - SpawnPoint
+  - Pickable
+  - Enemies
   - 
   - 
   - 

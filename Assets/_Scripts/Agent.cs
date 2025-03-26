@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private PlayerInput playerInput;
+    private Rigidbody2D rb;
+
+
+
+    private void Awake()
     {
-        
+        playerInput = GetComponentInParent<PlayerInput>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        playerInput.OnMovement += HandleMovement;
+    }
+
+
+    private void HandleMovement(Vector2 input)
+    {
+        if(Mathf.Abs(input.x) > 0)
+        {
+            rb.velocity = new Vector2(input.x * 5f, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
     }
 }
