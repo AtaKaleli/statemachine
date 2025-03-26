@@ -4,7 +4,9 @@ using UnityEngine;
 public enum AnimationType
 {
     Idle,
-    Run
+    Run,
+    Jump,
+    Fall
 }
 
 public class AnimationController : MonoBehaviour
@@ -23,10 +25,16 @@ public class AnimationController : MonoBehaviour
         switch (animationType)
         {
             case AnimationType.Idle:
-                Play("Player_Idle");
+                Play("Idle");
                 break;
             case AnimationType.Run:
-                Play("Player_Run");
+                Play("Run");
+                break;
+            case AnimationType.Jump:
+                Play("Jump");
+                break;
+            case AnimationType.Fall:
+                Play("Fall");
                 break;
             default:
                 print("No Animation found");

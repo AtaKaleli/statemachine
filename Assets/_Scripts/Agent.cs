@@ -9,7 +9,9 @@ public class Agent : MonoBehaviour
     private Rigidbody2D rb;
     private AnimationController anim;
     private FlipController flipController;
+    private GroundDetector groundDetector;
 
+    [SerializeField] private float jumpForce;
 
     private void Awake()
     {
@@ -17,6 +19,7 @@ public class Agent : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<AnimationController>();
         flipController = GetComponentInChildren<FlipController>();
+        groundDetector = GetComponentInChildren<GroundDetector>();
     }
 
     private void OnEnable()
@@ -29,8 +32,6 @@ public class Agent : MonoBehaviour
 
     private void HandleMovement(Vector2 input)
     {
-
-
         if (Mathf.Abs(input.x) > 0)
         {
             if(Mathf.Abs(rb.velocity.x) < 0.01f)
@@ -49,8 +50,7 @@ public class Agent : MonoBehaviour
 
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
-
-        
-        
     }
+
+
 }
