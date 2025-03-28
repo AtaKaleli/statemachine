@@ -5,52 +5,63 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    private Rigidbody2D rb;
-    private AnimationController anim;
-    private FlipController flipController;
+    [HideInInspector] public PlayerInput agentInput;
+    [HideInInspector] public Rigidbody2D agentRb;
+    [HideInInspector] public AnimationController agentAnimation;
+    [HideInInspector] public FlipController flipController;
     private GroundDetector groundDetector;
 
-    [SerializeField] private float jumpForce;
+    public State currentState = null;
+    public State IdleState;
+    
 
     private void Awake()
     {
-        playerInput = GetComponentInParent<PlayerInput>();
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponentInChildren<AnimationController>();
+        agentInput = GetComponentInParent<PlayerInput>();
+        agentRb = GetComponent<Rigidbody2D>();
+        agentAnimation = GetComponentInChildren<AnimationController>();
         flipController = GetComponentInChildren<FlipController>();
         groundDetector = GetComponentInChildren<GroundDetector>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        playerInput.OnMovement += HandleMovement;
-        playerInput.OnMovement += flipController.Flip;
+        InitializeAgentToStates();
+        ChangeState(IdleState); // set the initial state to IdleState
+    }
+
+    private void InitializeAgentToStates()
+    {
+        State[] states = GetComponentsInChildren<State>();
+        foreach (var state in states)
+        {
+            state.InitializeAgent(this);
+        }
+    }
+
+    private void Update()
+    {
+        //currentState.StateUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        //currentState.StateFixedUpdate();
+    }
+
+    
+    public void ChangeState(State newState)
+    {
+        if (newState == null)
+            return;
+
+        if(currentState != null)
+            currentState.Exit();
         
+        currentState = newState;
+        currentState.Enter();
     }
 
-
-    private void HandleMovement(Vector2 input)
-    {
-        if (Mathf.Abs(input.x) > 0)
-        {
-            if(Mathf.Abs(rb.velocity.x) < 0.01f)
-            {
-                anim.PlayAnimation(AnimationType.Run);
-            }
-
-            rb.velocity = new Vector2(input.x * 5f, rb.velocity.y);
-        }
-        else
-        {
-            if (Mathf.Abs(rb.velocity.x) > 0.01f)
-            {
-                anim.PlayAnimation(AnimationType.Idle);
-            }
-
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
-    }
 
 
 }
